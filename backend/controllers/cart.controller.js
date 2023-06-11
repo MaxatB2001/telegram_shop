@@ -12,6 +12,9 @@ class CartController {
       if (!cart) {
         cart = await Cart.create({userName})
       }
+      // if (cart.items.includes(item._id)) {
+      //   return res.json(cart)  
+      // }
       cart.items.push(item)
       cart.save()
       return res.json(cart)
@@ -24,6 +27,7 @@ class CartController {
     const {userName} = req.params
     try {
       let cart = await Cart.findOne({userName}).populate("items");
+      console.log(cart);
       return res.json(cart)
     } catch (error) {
       next(ApiError.badRequest("error"))

@@ -2,6 +2,7 @@ const ApiError = require("../errors/ApiError")
 const Item = require("../models/Item.model")
 const uuid = require("uuid")
 const path = require("path")
+const Review = require("../models/review.model")
 
 
 class ItemController {
@@ -24,6 +25,34 @@ class ItemController {
       const items = await Item.find({categoryName: categoryName});
       return res.json(items)
     } catch (error) {
+      next(ApiError.badRequest("error"))
+    }
+  }
+
+  async getItemById(req, res, next) {
+    const {id} = req.params
+    try {
+      const item = await Item.findOne({_id: id}).populate("reviews")
+      
+      return res.json(item)
+    } catch (error) {
+      console.log(error)
+      next(ApiError.badRequest("error"))
+    }
+  }
+
+  async addReviewToItem(req, res, next) {
+    const {id} = req.params
+    const {review} = req.body
+    console.log(review);
+    try {
+      const item = await Item.findOne({_id: id})
+      const createdReview = await Review.create(review)
+      item.reviews.push(createdReview)
+      item.save()
+      return res.json(createdReview)
+    } catch (error) {
+      console.log(error);
       next(ApiError.badRequest("error"))
     }
   }

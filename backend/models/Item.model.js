@@ -17,7 +17,8 @@ const itemSchema = mongoose.Schema(
     categoryName: {
       type: String,
       required: true,
-    }
+    },
+    reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}]
   },
   {
     minimize: false,

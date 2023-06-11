@@ -6,6 +6,7 @@ import Button from '../Button/Button'
 const Header = () => {
 
   const onClose = () => {
+    console.log(JSON.stringify(tg.initDataUnsafe?.user));
     tg.close()
   }
 

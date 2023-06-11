@@ -19,7 +19,7 @@ function App() {
       <Header/>
       <Routes>
         <Route path='/:categoryName' element={<Catalog/>}/>
-        <Route path='product' element={<ProductPage/>}/>
+        <Route path='/product/:id' element={<ProductPage/>}/>
       </Routes>
     </>
   )
